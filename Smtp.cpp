@@ -85,11 +85,13 @@ private:
 
     /**
      * Sends a command to the server
+     * should_read : bool - On certain command we need to send more data without reading from socket
      */
-    void write_command(std::string command)
+    void write_command(std::string command, bool should_read = true)
     {
         ssize_t n;
         empty_buffer();
+        command += '\r';
         command += '\n';
         char command_buffer[255];
         strcpy(command_buffer, command.c_str());
@@ -97,12 +99,16 @@ private:
         if (n < 0){
             error("ERROR writing to socket");
         }
-        n = read_to_buffer();
-        if (n < 0) {
-            error("ERROR reading from socket");
+        
+        if (should_read) {
+            n = read_to_buffer();
+            if (n < 0) {
+                error("ERROR reading from socket");
+            }
         }
         printf("%s\n",this->buffer);
     }
+    
     
     /**
      *  Encodes a string as base64
@@ -164,6 +170,21 @@ public:
         std::string password_64 = this->base64_encode(password.c_str(), password.length());
         write_command(uname_64);
         write_command(password_64);
+    }
+    
+    void sendmail()
+    {
+        // receipient
+        // sneder
+        write_command("MAIL FROM: <halli@ist-einmalig.de>");
+        write_command("RCPT TO: <christoph.hallmann@gmx.de>");
+        write_command("DATA");
+        write_command("Subject: testmail", false);
+        write_command(" ", false);
+        write_command("BlaBlub", false);
+        write_command(" ", false);
+        write_command(".", true);
+        write_command("QUIT");
     }
     
     /**

@@ -22,6 +22,9 @@ int main(int argc, const char * argv[]) {
     smtp_client.new_connection("smtp.mailtrap.io", 25);
     // todo place this in a file
     smtp_client.auth_login(username, password);
+    
+    smtp_client.sendmail();
+    
     smtp_client.close_connection();
 
     return 0;
