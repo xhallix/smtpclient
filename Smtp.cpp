@@ -17,10 +17,6 @@ static const std::string base64_chars =
 "0123456789+/";
 
 
-static inline bool is_base64(unsigned char c) {
-    return (isalnum(c) || (c == '+') || (c == '/'));
-}
-
 class Smtp {
 
 private:
