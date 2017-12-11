@@ -105,8 +105,8 @@ private:
             if (n < 0) {
                 error("ERROR reading from socket");
             }
+            printf("%s\n",this->buffer);
         }
-        printf("%s\n",this->buffer);
     }
     
     
@@ -175,15 +175,14 @@ public:
     void sendmail()
     {
         // receipient
-        // sneder
-        write_command("MAIL FROM: <halli@ist-einmalig.de>");
-        write_command("RCPT TO: <christoph.hallmann@gmx.de>");
+        // sender
+        write_command("MAIL FROM:<foo@bar.de>");
+        write_command("RCPT TO:<foo@bar.de>");
         write_command("DATA");
-        write_command("Subject: testmail", false);
         write_command(" ", false);
-        write_command("BlaBlub", false);
+        write_command("This is a test", false);
         write_command(" ", false);
-        write_command(".", true);
+        write_command(".");
         write_command("QUIT");
     }
     
