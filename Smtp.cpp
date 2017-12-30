@@ -174,21 +174,17 @@ public:
     
     void sendmail()
     {
-        // receipient
-        // sender
         
         write_command("MAIL FROM: <foo@bar.de>");
         write_command("RCPT TO: <foo@bar.de>");
         
         write_command("DATA");
-
-        write_command(" ", false);
         write_command("MIME-Version: 1.0", false);
-        write_command("From: <foo@bar.de>", false);
-        write_command("To: <foo@bar.de>", false);
-        write_command("Subject: Welcome to hell", false);
-        write_command("Date: Thu, 26 Oct 2006 13:10:50 +0200", false);
-        write_command(" ", false);
+        write_command("From: foo@bar.de <foo@bar.de>", false);
+        write_command("To: foo@bar.de <foo@bar.de>", false);
+        write_command("Subject: Welcome", false);
+        write_command("Date: Thu, 26 Oct 2017 13:10:50 +0200", false);
+        write_command("\r\n", false);
         write_command("This is a test", false);
         write_command(" ", false);
         write_command(".");
